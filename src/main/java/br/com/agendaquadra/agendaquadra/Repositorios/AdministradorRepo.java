@@ -7,7 +7,7 @@ import br.com.agendaquadra.agendaquadra.Models.Usuarios;
 
 public interface AdministradorRepo extends CrudRepository<Usuarios, Integer>{
 
-    @Query(value = "SELECT * FROM tbl_usuarios WHERE email = :email AND senha = :senha", nativeQuery = true)
+    @Query(value = "SELECT * FROM usuario WHERE email = :email AND senha = :senha", nativeQuery = true)
     public Usuarios Login(String email, String senha);
     
 }

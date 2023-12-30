@@ -1,6 +1,7 @@
 package br.com.agendaquadra.agendaquadra.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,12 @@ public class LoginController {
     @Autowired
     private AdministradorRepo repo;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public LoginController(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     @GetMapping("/login")
     public String index(){
         return "login";
@@ -22,20 +29,13 @@ public class LoginController {
 
     @PostMapping("/verificaLogin")
     public String autenticar(Model model, Usuarios addParametros){
-        String email = addParametros.getEmail();
-        String senha = addParametros.getSenha();
 
-        if (email == null || email.isEmpty()) {
-            model.addAttribute("erroEmail", "Por favor, preencha o campos E-mail.");
-            return "login";
-        }else if(senha == null || senha.isEmpty()){
-            model.addAttribute("erroSenha", "Por favor, preencha o campos Senha.");
-            return "login";
-        }
-        Usuarios user = this.repo.Login(addParametros.getEmail(), addParametros.getSenha());
+        String senhaCriptografada = passwordEncoder.encode(addParametros.getSenha());
+        
+        Usuarios user = this.repo.Login(addParametros.getEmail(), senhaCriptografada);
         
         if(user != null){
-            return "redirect:/listaAdmin";
+            return "redirect:/admin";
         }
         model.addAttribute("erro", "Usuário ou senha inválida!");
         return "login";

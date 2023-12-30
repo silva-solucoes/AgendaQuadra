@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tbl_usuarios")
+@Table(name = "usuario")
 public class Usuarios {
     
     @Id
@@ -21,8 +21,10 @@ public class Usuarios {
     private String email;
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
-    @Column(name = "status", nullable = false)
-    private int status;
+    @Column(name = "tipo_acesso", length = 100, nullable = false)
+    private String tipoAcesso;
+    @Column(name = "ativo", nullable = false)
+    private int ativo;
 
     public int getId() {
         return id;
@@ -55,12 +57,20 @@ public class Usuarios {
         this.senha = senha;
     }
 
-    public int getStatus() {
-        return status;
+    public String getTipoAcesso() {
+        return tipoAcesso;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setTipoAcesso(String tipoAcesso) {
+        this.tipoAcesso = tipoAcesso;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
     }
 
 }
