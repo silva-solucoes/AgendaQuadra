@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br"xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,46 +30,45 @@
         <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
 
         <main>
-            <div class="container">
+            <div class="container mt-5">
                 <div class="row justify-content-center">
                     <div class="col-md-6 form-container">
-                        <h2 class="mb-4 text-center">Agendamento de Quadras Poliesportivas</h2>
-            
-                        <form action="" method="POST">
-                            <div class="form-group">
-                                <label for="day">Dia desejado:</label>
-                                <input type="date" class="form-control" id="day" name="day" required>
+                        <h2 class="text-center mb-4">Agendamento de Quadras Poliesportivas</h2>
+                        <div th:if="${msgErro != null}" th:text="${msgErro}" class="alert alert-danger" role="alert"></div>
+                        <form action="/cadastrarAgendamento" th:object="${agenda}" method="POST">
+                            <div class="mb-3">
+                                <label for="day" class="form-label">Dia desejado:</label>
+                                <input type="date" class="form-control" id="day" name="day" th:field="*{dia}" required>
                             </div>
-                            <div class="form-group">
-                                <label for="quadra">Quadra desejada:</label>
+                
+                            <div class="mb-3">
+                                <label for="quadra" class="form-label">Quadra desejada:</label>
                                 <select class="form-control" id="quadra" name="quadra" th:field="*{quadra}" required>
-                                    <option value="">Selecione a atividade</option>
+                                    <option value="">Selecione a quadra</option>
                                     <option th:each="quadra : ${T(br.com.agendaquadra.agendaquadra.Enums.Quadras).values()}" th:value="${quadra}" th:text="${quadra}"></option>
                                 </select>
                             </div>
-                        <div>
-                        <label for="activity">Atividade desejada:</label>
-                        <select class="form-control" id="activity" name="activity" th:field="*{esporte}" required>
-                            <option value="">Selecione a atividade</option>
-                            <option th:each="esporte : ${T(br.com.agendaquadra.agendaquadra.Enums.Esportes).values()}" th:value="${esporte}" th:text="${esporte}"></option>
-                            <!-- Adicione outras opções conforme necessário -->
-                        </select>
-                    </div>
-                    <br>
-                            
-                    <?php 
-                       if (isset($_SESSION['nome'])) {
-                        $nome = $_SESSION['nome'];
-            
-                        echo $nome;
-                       } else{ ?>
-                        <form class="d-flex" role="search">
-                          <a href="login.php" class="btn btn-outline-dark" style="margin-right:5%;">Login</a>
-                          <a href=" escolhalogin.php" class="btn btn-outline-dark">Cadastro</a>
+                
+                            <div class="mb-3">
+                                <label for="activity" class="form-label">Atividade desejada:</label>
+                                <select class="form-control" id="activity" name="activity" th:field="*{atividade}" required>
+                                    <option value="">Selecione a atividade</option>
+                                    <option th:each="esporte : ${T(br.com.agendaquadra.agendaquadra.Enums.Esportes).values()}" th:value="${esporte}" th:text="${esporte}"></option>
+                                </select>
+                            </div>
+                
+                            <div class="mb-3 text-center" th:if="${session.usuarioLogado != null}">
+                                <button type="submit" class="btn btn-primary">Solicitar Agendamento</button>
+                            </div>
+                            <div class="col text-center" th:unless="${session.usuarioLogado != null}">
+                                <a href="/login" class="btn btn-outline-dark">Login</a>
+                                <a href="/cadastro" class="btn btn-outline-dark">Cadastro</a>
+                            </div>
                         </form>
-                        <?php }?>
-                        <br>
-                        <button type="submit" class="btn btn-primary btn-block"><a href="index.html" style="text-decoration: none; color: white;">Voltar para página inicial</a></button>
+        
+                        <div class="mt-4 text-center">
+                            <a href="/" class="btn btn-secondary">Voltar para Página Principal</a>
+                        </div>
                     </div>
                 </div>
             </div>
