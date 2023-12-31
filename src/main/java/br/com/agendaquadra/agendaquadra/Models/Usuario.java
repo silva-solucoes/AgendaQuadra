@@ -1,7 +1,10 @@
 package br.com.agendaquadra.agendaquadra.Models;
 
+import br.com.agendaquadra.agendaquadra.Enums.TipoAcesso;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuario")
-public class Usuarios {
+public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +24,19 @@ public class Usuarios {
     private String email;
     @Column(name = "senha", length = 255, nullable = false)
     private String senha;
-    @Column(name = "tipo_acesso", length = 100, nullable = false)
-    private String tipoAcesso;
     @Column(name = "ativo", nullable = false)
     private int ativo;
+    @Column(name = "tipo_acesso", length = 100, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoAcesso tipoacesso;
+
+    public TipoAcesso getTipoacesso() {
+        return tipoacesso;
+    }
+
+    public void setTipoacesso(TipoAcesso tipoacesso) {
+        this.tipoacesso = tipoacesso;
+    }
 
     public int getId() {
         return id;
@@ -55,14 +67,6 @@ public class Usuarios {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getTipoAcesso() {
-        return tipoAcesso;
-    }
-
-    public void setTipoAcesso(String tipoAcesso) {
-        this.tipoAcesso = tipoAcesso;
     }
 
     public int getAtivo() {
