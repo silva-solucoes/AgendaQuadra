@@ -36,6 +36,13 @@ public class UsuarioController {
         return mv;
     }
 
+    @GetMapping("/admin")
+    public ModelAndView admin(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("admin/index");
+        return mv;
+    }
+
     @GetMapping("/login")
     public ModelAndView login(){
         ModelAndView mv = new ModelAndView();
@@ -55,14 +62,28 @@ public class UsuarioController {
     @PostMapping("cadastrarUsuario")
     public ModelAndView cadastrarUsuario(Usuario usuario) throws Exception{
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/cadastro");
-
+        try {
+            if (usuariorepositorio.findByEmail(usuario.getEmail()) != null) {
+                // E-mail já existe, retorna para /cadastro com a mensagem de erro
+                mv.setViewName("redirect:/cadastro");
+                mv.addObject("emailErro", "Já existe um e-mail cadastrado para: " + usuario.getEmail());
+                return mv;
+            }
+    
+            usuario.setSenha(Util.md5(usuario.getSenha()));
+        } catch (NoSuchAlgorithmException e) {
+            // Tratamento para erro na criptografia da senha
+            mv.setViewName("redirect:/cadastro");
+            mv.addObject("msgErro", "Erro na criptografia da senha");
+            return mv;
+        }
+        
         // Defina um valor padrão para tipoacesso, por exemplo, "Usuario"
         usuario.setTipoacesso(TipoAcesso.USUARIO);
         usuario.setAtivo(1);
-        
-        serviceUsuario.cadastrarUsuario(usuario);
-        
+        // Se não houver erros, salva o usuário e redireciona para /login
+        usuariorepositorio.save(usuario);
+        mv.setViewName("redirect:/login");
         return mv;
     }
 
@@ -86,7 +107,13 @@ public class UsuarioController {
             mv.addObject("msgErro", "Usuário não encontrado. Tente novamente");
         } else {
             session.setAttribute("usuarioLogado", usuarioLogin);
-            return index();
+
+            // Verifica o tipo de acesso do usuário
+            if (usuarioLogin.getTipoacesso() == TipoAcesso.USUARIO) {
+                return index();
+            } else if (usuarioLogin.getTipoacesso() == TipoAcesso.ADMINISTRADORSISTEMA) {
+                return admin();
+            }
         }
 
         return mv;
