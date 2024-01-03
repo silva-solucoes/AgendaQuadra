@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org" xmlns:java="http://www.thymeleaf.org/extras/java8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="img/calendar4-week.svg">
+    <title>Agendamento Quadras Poliesportivas</title>
+    <meta name="author" content="">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Lista de Agendamentos</h2>
+        <div class="mb-3">
+            <!-- Botão para voltar à página anterior -->
+            <a th:href="@{/admin}" class="btn btn-secondary" role="button">
+                <span class="bi-arrow-left"></span> Voltar
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data de Solicitação</th>
+                    <th scope="col">Quadra</th>
+                    <th scope="col">Atividade Esportiva</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="agenda : ${agendaList}">
+                    <th scope="row" th:text="${agenda.id}"></th>
+                    <td th:if="${agenda != null and agenda.dia != null}">
+                        <th:block th:with="formatter=${T(java.time.format.DateTimeFormatter).ofPattern('dd/MM/yyyy')}, formattedDate=${formatter.format(agenda.dia)}">
+                            <!-- Utilizar o formatter para formatar a data -->
+                            <th:block th:text="${formattedDate}"></th:block>
+                        </th:block>
+                    </td>
+                    <td th:unless="${agenda != null and agenda.dia != null}">Data indisponível</td>
+                    <td th:text="${agenda.quadra}"></td>
+                    <td th:text="${agenda.atividade}"></td>
+                    <td th:text="${agenda.aceito}"></td>
+                    <td>
+                        <!-- Botão de Edição -->
+                        <a th:if="${'Pendente' == agenda.aceito}" th:href="@{'/aceitarAgenda/' + ${agenda.id}}" class="btn btn-primary btn-sm" role="button">
+                            <span class="bi-pencil"></span> Aceitar
+                        </a>
+                        
+                        <a th:if="${'Pendente' == agenda.aceito}" th:href="@{'/negarAgenda/' + ${agenda.id}}" class="btn btn-danger btn-sm" role="button">
+                            <span class="bi-pencil"></span> Negar
+                        </a>
+                        
+                        <a th:if="${'Aceito' == agenda.aceito}" th:href="@{'/negarAgenda2/' + ${agenda.id}}" class="btn btn-danger btn-sm" role="button">
+                            <span class="bi-pencil"></span> Negar
+                        </a>
+                        
+                        <a th:if="${'Negado' == agenda.aceito}" th:href="@{'/aceitarAgenda2/' + ${agenda.id}}" class="btn btn-primary btn-sm" role="button">
+                            <span class="bi-pencil"></span> Aceitar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: rodape"></div>
+
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

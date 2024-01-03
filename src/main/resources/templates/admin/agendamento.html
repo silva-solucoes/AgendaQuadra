@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+        <title>Agendamento de Quadras</title>
+        <link rel="icon" href="img/calendar4-week.svg">
+        <meta name="author" content="">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+            }
+    
+            .container {
+                margin-top: 50px;
+            }
+    
+            .form-container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </head>
+    <body>
+
+        <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+        <main>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 form-container">
+                        <h2 class="text-center mb-4">Agendamento de Quadras Poliesportivas</h2>
+                        <div th:if="${msgErro != null}" th:text="${msgErro}" class="alert alert-danger" role="alert"></div>
+                        <form action="/cadastrarAgendamento" th:object="${agenda}" method="POST">
+                            <div class="mb-3">
+                                <label for="day" class="form-label">Dia desejado:</label>
+                                <input type="date" class="form-control" id="day" name="day" th:field="*{dia}" required>
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="quadra" class="form-label">Quadra desejada:</label>
+                                <select class="form-control" id="quadra" name="quadra" th:field="*{quadra}" required>
+                                    <option value="">Selecione a quadra</option>
+                                    <option th:each="quadra : ${T(br.com.agendaquadra.agendaquadra.Enums.Quadras).values()}" th:value="${quadra}" th:text="${quadra}"></option>
+                                </select>
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="activity" class="form-label">Atividade desejada:</label>
+                                <select class="form-control" id="activity" name="activity" th:field="*{atividade}" required>
+                                    <option value="">Selecione a atividade</option>
+                                    <option th:each="esporte : ${T(br.com.agendaquadra.agendaquadra.Enums.Esportes).values()}" th:value="${esporte}" th:text="${esporte}"></option>
+                                </select>
+                            </div>
+                
+                            <div class="mb-3 text-center" th:if="${session.usuarioLogado != null}">
+                                <button type="submit" class="btn btn-primary">Solicitar Agendamento</button>
+                            </div>
+                            <div class="col text-center" th:unless="${session.usuarioLogado != null}">
+                                <a href="/login" class="btn btn-outline-dark">Login</a>
+                                <a href="/cadastro" class="btn btn-outline-dark">Cadastro</a>
+                            </div>
+                        </form>
+        
+                        <div class="mt-4 text-center">
+                            <a href="/" class="btn btn-secondary">Voltar para Página Principal</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="fragmentos/fragmentos :: rodape"></div>
+
+    </body>
+</html>

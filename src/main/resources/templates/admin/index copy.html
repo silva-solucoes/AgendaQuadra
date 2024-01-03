@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="img/calendar4-week.svg">
+    <title>Agendamento Quadras Poliesportivas</title>
+    <meta name="author" content="">
+
+    <style>
+        .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+
+      .bd-mode-toggle .dropdown-menu .active .bi {
+        display: block !important;
+      }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+</head>
+<body>
+    
+    <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+    <main>
+        <div class="container">
+          <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="img/slide1.svg" alt="Erro">
+                <div class="container">
+                  <div class="carousel-caption text-start text-light">
+                    <h1>Verifique agora a disponilidade de nossas quadras</h1>
+                    <p class="opacity-75">Aqui temos a melhor qualidade em nossas quadras</p>
+                    <p><a class="btn btn-lg text-light btn-info " href="/agendamento">Saiba mais</a></p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="img/slide2.svg" alt="Erro">
+                <div class="container">
+                  <div class="carousel-caption text-light">
+                    <h1>Agende um horário</h1>
+                    <p>Se cuidar é sempre importante, por isso pratique esportes.</p>
+                    <p><a class="btn btn-lg btn-info text-light" href="/agendamento">Saiba mais</a></p>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+              </button>
+            </div>
+  
+            <br><br>
+  
+            <div class="container marketing">
+  
+              <!-- Three columns of text below the carousel -->
+              <div class="row">
+                <div class="col-lg-4">
+                  <img src="img/foto1.svg" style="width: 50%;  height: 50%; border-radius: 20%;"  alt="Erro">
+                  <br><br>
+                  <h2 class="fw-normal">Escolha a Quadra</h2>
+                  <p>Escolha nossas quadras disponiveis para agendamento</p>
+                </div>
+                <div class="col-lg-4">
+                  <img src="img/foto2.svg" style="width: 50%;  height: 50%; border-radius: 20%;"  alt="Erro">
+                  <br><br>
+                  <h2 class="fw-normal">Escolha seu horário</h2>
+                  <p>Cada quadra possui a sua agenda completa, basta escolher o dia que você preferir</p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                  <img src="img/foto3.svg" style="width: 50%;  height: 50%; border-radius: 20%;"  alt="Erro">
+                  <br><br>
+                  <h2 class="fw-normal">Agende e Aproveite!</h2>
+                  <p>Facíl né? Agora é partir para o aquecimento e dar um show na partida</p>
+                </div><!-- /.col-lg-4 -->
+              </div><!-- /.row -->
+  
+              <hr class="featurette-divider">
+  
+              <div class="row featurette">
+                <div class="col-md-7">
+                  <h2 class="featurette-heading fw-normal lh-1">Quadra Poliesportiva 1</h2>
+                  <p class="lead" style="text-align: justify;">Geralmente recomendada para esportes como basquetebol e handebol, Aqui no nosso site de agendamentos fazemos o melhor agendamento para você!</p>
+                  <br>
+                    <button class="btn btn-lg text-light btn-info"><a href="/agendamento" style="text-decoration: none;" class="text-light">Agende seu horário</a></button>
+                  <br>
+                  <br>
+                    <button class="btn btn-lg text-light btn-info"><a href="/agendamento" style="text-decoration: none;" class="text-light">Verificar disponilidade em tempo real</a></button>
+                </div>
+                <div class="col-md-5">
+                  <img src="img/quadra1.svg" style="width: 100%; height: 100%;" alt="Erro">
+                </div>
+              </div>
+  
+              <hr class="featurette-divider">
+  
+              <div class="row featurette">
+                <div class="col-md-7">
+                  <h2 class="featurette-heading fw-normal lh-1">Quadra Poliesportiva 2</h2>
+                  <p class="lead" style="text-align: justify;">Geralmente recomendada para esportes como futebol e vôleibol, Aqui no nosso site de agendamentos fazemos o melhor agendamento para você!</p>
+                  <br>
+                    <button class="btn btn-lg text-light btn-info"><a href="/agendamento" style="text-decoration: none;" class="text-light">Agende seu horário</a></button>
+                  <br>
+                  <br>
+                    <button class="btn btn-lg text-light btn-info"><a href="/agendamento" style="text-decoration: none;" class="text-light">Verificar disponilidade em tempo real</a></button>
+                </div>
+                <div class="col-md-5">
+                  <img src="img/quadra2.svg" style="width: 100%; height: 100%;" alt="Erro">
+                </div>
+              </div>
+  
+            </div><!-- /.container -->
+            
+            <div th:replace="fragmentos/fragmentos :: rodape"></div>
+      </main>
+
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="icon" href="../img/calendar4-week.svg">
+    <title>Agendamento Quadras Poliesportivas</title>
+    <meta name="author" content="">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+    <div class="container mt-5">
+        <h2 class="mb-4" style="margin-top: 70px;">Editar Usuário</h2>
+        <div th:if="${msgErro != null}" th:text="${msgErro}" class="alert alert-danger" role="alert"></div>
+        <form action="/editarUser" method="POST" th:object="${usuario}">
+            <input th:field="*{id}" type="hidden" />
+            <div class="row">
+                <!-- Campo Nome -->
+                <div class="col-md-12 mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input th:field="*{nome}" type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do usuário">
+                </div>
+            </div>
+        
+            <div class="row">
+                <!-- Campo E-mail -->
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input th:field="*{email}" type="email" name="email" class="form-control" id="email" placeholder="Digite o e-mail do usuário">
+                </div>
+        
+                <!-- Campo Senha (desabilitado) -->
+                <div class="col-md-6 mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input th:field="*{senha}" type="text" class="form-control" id="senha" name="senha" placeholder="Digite uma Senha" readonly>
+                </div>
+            </div>
+        
+            <!-- Botão de Envio -->
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+        <a th:href="@{'/listaAgendamentos'}" class="btn btn-secondary mt-3" role="button">
+            <span class="bi-arrow-left"></span> Voltar à Lista de Usuários
+        </a>
+    </div>
+
+    <div th:replace="fragmentos/fragmentos :: rodape"></div>
+
+    <script src="../webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../webjars/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

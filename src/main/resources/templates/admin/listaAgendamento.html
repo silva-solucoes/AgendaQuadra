@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+        <title>Agendamento de Quadras</title>
+        <link rel="icon" href="img/calendar4-week.svg">
+        <meta name="author" content="">
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+            }
+    
+            .container {
+                margin-top: 50px;
+            }
+    
+            .form-container {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </head>
+    <body>
+
+        <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+        <main>
+            <div class="container mt-5">
+               <div class="mt-5">
+                    <h2 class="text-center mb-4">Lista de Agendamentos</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Dia</th>
+                                <th scope="col">Quadra</th>
+                                <th scope="col">Atividade</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr th:each="agenda : ${agendaList}">
+                                <td th:text="${agenda.dia}"></td>
+                                <td th:text="${agenda.quadra}"></td>
+                                <td th:text="${agenda.atividade}"></td>
+                                <td th:text="${agenda.aceito}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="fragmentos/fragmentos :: rodape"></div>
+
+    </body>
+</html>
